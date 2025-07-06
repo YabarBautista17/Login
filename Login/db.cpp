@@ -7,16 +7,35 @@ db::db() {
 }
 
 void db::AbrirConeccion() {
-	this->conn->Open();
+	if (this->conn != nullptr && this->conn->State != ConnectionState::Open) {
+		try {
+			this->conn->Open();
+		}
+		catch (MySqlException^ ex) {
+			// Optional: Log exception or handle as needed
+			// For now, rethrow to make the caller aware.
+			throw ex;
+		}
+	}
 }
 
 void db::CerrarConeccion() {
-	this->conn->Close();
+	if (this->conn != nullptr && this->conn->State == ConnectionState::Open) {
+		try {
+			this->conn->Close();
+		}
+		catch (MySqlException^ ex) {
+			// Optional: Log exception or handle as needed
+			throw ex;
+		}
+	}
 }
 
 
 
 DataTable^ db::getData() {
+	// This method assumes the connection is managed (opened/closed) by the caller.
+	// If it's not, it would need its own try/finally for Open/Close.
 	String^ sql = "select * from user";
 	MySqlCommand^ cursor = gcnew MySqlCommand(sql, this->conn);
 	MySqlDataAdapter^ data = gcnew MySqlDataAdapter(cursor);
