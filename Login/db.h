@@ -14,5 +14,6 @@ public:
 	DataTable^ getData();
 	void AbrirConeccion();
 	void CerrarConeccion();
+	MySqlConnection^ GetConnection() { return conn; } // Added GetConnection method
 };
 

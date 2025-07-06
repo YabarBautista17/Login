@@ -184,6 +184,7 @@ namespace Login {
 			this->button1->TabIndex = 11;
 			this->button1->Text = L"Guardar";
 			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &MyForm1::button1_Click);
 			// 
 			// datasss
 			// 
@@ -220,14 +221,73 @@ namespace Login {
 		}
 #pragma endregion
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+		// Retrieve data from textboxes
+		String^ nombre = Nombre->Text;
+		String^ pass = Pass->Text;
+		String^ userRol = rol->Text; // Changed variable name to avoid conflict
+		String^ departamento = dep->Text;
+
+		// Basic validation: Check if fields are empty
+		if (String::IsNullOrWhiteSpace(nombre) || String::IsNullOrWhiteSpace(pass) || String::IsNullOrWhiteSpace(userRol) || String::IsNullOrWhiteSpace(departamento)) {
+			MessageBox::Show("Por favor, llene todos los campos.", "Error de entrada", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
+
+		try {
+			this->data->AbrirConeccion();
+			// Using parameterized queries to prevent SQL injection.
+			String^ query = "INSERT INTO user (user, clave, rol, departamento) VALUES (@user, @clave, @rol, @departamento)";
+			MySql::Data::MySqlClient::MySqlCommand^ cmd = gcnew MySql::Data::MySqlClient::MySqlCommand(query, this->data->GetConnection());
+			cmd->Parameters->AddWithValue("@user", nombre);
+			cmd->Parameters->AddWithValue("@clave", pass);
+			cmd->Parameters->AddWithValue("@rol", userRol);
+			cmd->Parameters->AddWithValue("@departamento", departamento);
+
+			int result = cmd->ExecuteNonQuery();
+
+			if (result > 0) {
+				MessageBox::Show("Usuario agregado exitosamente.", "Éxito", MessageBoxButtons::OK, MessageBoxIcon::Information);
+				// Clear fields after successful insertion
+				Nombre->Clear();
+				Pass->Clear();
+				rol->Clear();
+				dep->Clear();
+				// Refresh DataGridView
+				Consulta();
+			}
+			else {
+				MessageBox::Show("No se pudo agregar el usuario.", "Error de base de datos", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+		catch (MySql::Data::MySqlClient::MySqlException^ ex) {
+			MessageBox::Show("Error de base de datos: " + ex->Message, "Error de base de datos", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+		catch (Exception^ ex) {
+			MessageBox::Show("Ocurrió un error: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+		finally {
+			if (this->data != nullptr) { // Check if data is not null
+				this->data->CerrarConeccion();
+			}
+		}
 	}
 	private: System::Void MyForm1_Load(System::Object^ sender, System::EventArgs^ e) {
-
+		// Load data when the form loads
+		Consulta();
 	}
 	public: void Consulta() {
-		this->data->AbrirConeccion();
-		this->datasss->DataSource = this->data->getData();
-		this->data->CerrarConeccion();
-		   }
+		try {
+			this->data->AbrirConeccion();
+			this->datasss->DataSource = this->data->getData();
+		}
+		catch (Exception^ ex) {
+			MessageBox::Show("Error al cargar datos: " + ex->Message, "Error de carga de datos", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+		finally {
+			if (this->data != nullptr) { // Check if data is not null
+				this->data->CerrarConeccion();
+			}
+		}
+	}
 };
 }

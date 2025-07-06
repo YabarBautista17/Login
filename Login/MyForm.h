@@ -13,7 +13,7 @@ namespace Login {
 	/// <summary>
 	/// Summary for MyForm
 	/// </summary>
-	public ref class MyForm : public System::Windows::Forms::UserControl
+	public ref class MyForm : public System::Windows::Forms::Form
 	{
 	public:
 		MyForm(void)
@@ -141,46 +141,52 @@ namespace Login {
 			this->ClientSize = System::Drawing::Size(734, 358);
 			this->Controls->Add(this->panel1);
 			this->Name = L"MyForm";
-			this->Text = L"MyForm";
+			this->Text = L"Login Form"; // Changed title for clarity
 			this->panel1->ResumeLayout(false);
 			this->panel1->PerformLayout();
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
-	public:
-		Form^ actual;
-
-	void abrirforma(Form^ hijo) {
-		if (this->actual != nullptr) {
-			this->actual->Close();
-
-		}
-		this->actual = hijo;
-		hijo->Dock = DockStyle::Fill;
-		panel1->Controls->Add(hijo);
-		panel1->Tag = hijo;
-		hijo->Show();
-	}
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-		String^ sql = "select * from user where user = '" + txt_name->Text + "' and clave = '" + txt_pass->Text + "'";
+		// Using parameterized query to prevent SQL injection
+		String^ sql = "SELECT * FROM user WHERE user = @user AND clave = @clave";
 		MySqlCommand^ cursor = gcnew MySqlCommand(sql, conn);
+		cursor->Parameters->AddWithValue("@user", txt_name->Text);
+		cursor->Parameters->AddWithValue("@clave", txt_pass->Text);
 		MySqlDataReader^ dataReader;
 		try {
 			this->conn->Open();
 			dataReader = cursor->ExecuteReader();
 
 			if (dataReader->Read()) {
-				this->conn->Close();
-				this->abrirforma(gcnew Login::MyForm1());
+				// No need to close connection here if Hide/ShowDialog is synchronous
+				// and connection is closed in finally block.
+				// However, if an exception occurs before finally, it might remain open.
+				// It's safer to close before showing dialog if ShowDialog is blocking.
+				if(this->conn->State == ConnectionState::Open) this->conn->Close();
+
+				MyForm1^ form1 = gcnew MyForm1();
+				this->Hide(); // Hide the login form
+				form1->ShowDialog(); // Show MyForm1 as a modal dialog
+				// Re-show logic can be tricky if main form closes.
+				// Consider Application::Run(gcnew MyForm()); if this form is the entry.
+				// For now, assuming Show() works as intended after dialog closes.
+				this->Show(); // Show the login form again when MyForm1 is closed
 			}
 			else {
-				this->conn->Close();
+				if(this->conn->State == ConnectionState::Open) this->conn->Close();
 				MessageBox::Show(L"Usuario no valido");
 			}
 		}
 		catch (Exception^ x) {
-			MessageBox::Show(x ->Message);
+			MessageBox::Show(x->Message);
+		}
+		finally {
+			// Ensure connection is closed even if an error occurs
+			if (this->conn != nullptr && this->conn->State == ConnectionState::Open) {
+				this->conn->Close();
+			}
 		}
 	}
 
