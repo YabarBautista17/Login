@@ -234,7 +234,7 @@ namespace Login {
 		}
 
 		try {
-			this->data->AbrirConeccion();
+			this->data->AbrirConeccion(); // Opens connection
 			// Using parameterized queries to prevent SQL injection.
 			String^ query = "INSERT INTO user (user, clave, rol, departamento) VALUES (@user, @clave, @rol, @departamento)";
 			MySql::Data::MySqlClient::MySqlCommand^ cmd = gcnew MySql::Data::MySqlClient::MySqlCommand(query, this->data->GetConnection());
@@ -266,8 +266,8 @@ namespace Login {
 			MessageBox::Show("Ocurrió un error: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 		finally {
-			if (this->data != nullptr) { // Check if data is not null
-				this->data->CerrarConeccion();
+			if (this->data != nullptr) {
+				this->data->CerrarConeccion(); // Closes connection after insert attempt
 			}
 		}
 	}
@@ -277,15 +277,16 @@ namespace Login {
 	}
 	public: void Consulta() {
 		try {
-			this->data->AbrirConeccion();
-			this->datasss->DataSource = this->data->getData();
+			this->data->AbrirConeccion(); // Opens connection
+			this->datasss->DataSource = this->data->getData(); // getData presumably uses the open connection
 		}
 		catch (Exception^ ex) {
+			// If error occurs here, connection might remain open if CerrarConeccion is not called in finally by getData or similar
 			MessageBox::Show("Error al cargar datos: " + ex->Message, "Error de carga de datos", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 		finally {
-			if (this->data != nullptr) { // Check if data is not null
-				this->data->CerrarConeccion();
+			if (this->data != nullptr) {
+				this->data->CerrarConeccion(); // Closes connection after fetching data
 			}
 		}
 	}
