@@ -14,7 +14,6 @@ public:
 	DataTable^ getData();
 	void AbrirConeccion();
 	void CerrarConeccion();
-	void deleteUser(String^ userId);
 	void updateUser(String^ userId, String^ nombre, String^ pass, String^ userRol, String^ departamento);
 	MySqlConnection^ GetConnection() { return conn; } // Added GetConnection method
 };

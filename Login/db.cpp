@@ -44,13 +44,6 @@ DataTable^ db::getData() {
 	return tabla;
 }
 
-void db::deleteUser(String^ userId) {
-	String^ sql = "DELETE FROM user WHERE id = @id";
-	MySqlCommand^ cursor = gcnew MySqlCommand(sql, this->conn);
-	cursor->Parameters->AddWithValue("@id", userId);
-	cursor->ExecuteNonQuery();
-}
-
 void db::updateUser(String^ userId, String^ nombre, String^ pass, String^ userRol, String^ departamento) {
 	String^ sql = "UPDATE user SET user = @user, clave = @clave, rol = @rol, departamento = @departamento WHERE id = @id";
 	MySqlCommand^ cursor = gcnew MySqlCommand(sql, this->conn);
