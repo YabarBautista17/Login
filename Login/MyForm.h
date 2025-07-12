@@ -72,9 +72,11 @@ namespace Login {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->BackColor = System::Drawing::SystemColors::ButtonFace;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Myanmar Text", 20.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->label1->BackColor = System::Drawing::Color::Transparent;
+			this->label1->Font = (gcnew System::Drawing::Font(L"Arial", 20.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
+			this->label1->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(192)));
 			this->label1->Location = System::Drawing::Point(122, 32);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(78, 48);
@@ -84,9 +86,11 @@ namespace Login {
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->BackColor = System::Drawing::SystemColors::ButtonHighlight;
-			this->label2->Font = (gcnew System::Drawing::Font(L"Myanmar Text", 21.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->label2->BackColor = System::Drawing::Color::Transparent;
+			this->label2->Font = (gcnew System::Drawing::Font(L"Arial", 21.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
+			this->label2->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(192)));
 			this->label2->Location = System::Drawing::Point(47, 143);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(153, 51);
@@ -95,6 +99,11 @@ namespace Login {
 			// 
 			// txt_name
 			// 
+			this->txt_name->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(40)), static_cast<System::Int32>(static_cast<System::Byte>(56)),
+				static_cast<System::Int32>(static_cast<System::Byte>(72)));
+			this->txt_name->Font = (gcnew System::Drawing::Font(L"Arial", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->txt_name->ForeColor = System::Drawing::Color::White;
 			this->txt_name->Location = System::Drawing::Point(220, 32);
 			this->txt_name->Multiline = true;
 			this->txt_name->Name = L"txt_name";
@@ -103,6 +112,11 @@ namespace Login {
 			// 
 			// txt_pass
 			// 
+			this->txt_pass->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(40)), static_cast<System::Int32>(static_cast<System::Byte>(56)),
+				static_cast<System::Int32>(static_cast<System::Byte>(72)));
+			this->txt_pass->Font = (gcnew System::Drawing::Font(L"Arial", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->txt_pass->ForeColor = System::Drawing::Color::White;
 			this->txt_pass->Location = System::Drawing::Point(220, 153);
 			this->txt_pass->Multiline = true;
 			this->txt_pass->Name = L"txt_pass";
@@ -111,12 +125,19 @@ namespace Login {
 			// 
 			// button1
 			// 
+			this->button1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(102)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(244)));
+			this->button1->FlatAppearance->BorderSize = 0;
+			this->button1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button1->Font = (gcnew System::Drawing::Font(L"Arial", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->button1->ForeColor = System::Drawing::Color::White;
 			this->button1->Location = System::Drawing::Point(220, 223);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(262, 75);
 			this->button1->TabIndex = 4;
-			this->button1->Text = L"Loging";
-			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Text = L"Login";
+			this->button1->UseVisualStyleBackColor = false;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
 			// 
 			// panel1
@@ -133,6 +154,7 @@ namespace Login {
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(734, 358);
 			this->panel1->TabIndex = 5;
+			this->panel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(27)), static_cast<System::Int32>(static_cast<System::Byte>(40)), static_cast<System::Int32>(static_cast<System::Byte>(56)));
 			// 
 			// MyForm
 			// 
