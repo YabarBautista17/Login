@@ -181,7 +181,7 @@ namespace Login {
 				static_cast<System::Byte>(0)));
 			this->button1->Location = System::Drawing::Point(438, 304);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(247, 47);
+			this->button1->Size = System::Drawing::Size(116, 47);
 			this->button1->TabIndex = 11;
 			this->button1->Text = L"Guardar";
 			this->button1->UseVisualStyleBackColor = true;
@@ -192,9 +192,9 @@ namespace Login {
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->button2->Font = (gcnew System::Drawing::Font(L"Myanmar Text", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->button2->Location = System::Drawing::Point(438, 350);
+			this->button2->Location = System::Drawing::Point(560, 304);
 			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(247, 47);
+			this->button2->Size = System::Drawing::Size(125, 47);
 			this->button2->TabIndex = 13;
 			this->button2->Text = L"Eliminar";
 			this->button2->UseVisualStyleBackColor = true;
@@ -212,7 +212,7 @@ namespace Login {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(734, 358);
+			this->ClientSize = System::Drawing::Size(734, 400);
 			this->Controls->Add(this->datasss);
 			this->Controls->Add(this->Tabla);
 			this->Controls->Add(this->button1);
