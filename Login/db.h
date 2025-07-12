@@ -14,6 +14,7 @@ public:
 	DataTable^ getData();
 	void AbrirConeccion();
 	void CerrarConeccion();
+	void deleteUser(String^ userId);
 	MySqlConnection^ GetConnection() { return conn; } // Added GetConnection method
 };
 

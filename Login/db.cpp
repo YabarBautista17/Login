@@ -43,3 +43,10 @@ DataTable^ db::getData() {
 	data->Fill(tabla);
 	return tabla;
 }
+
+void db::deleteUser(String^ userId) {
+	String^ sql = "DELETE FROM user WHERE id = @id";
+	MySqlCommand^ cursor = gcnew MySqlCommand(sql, this->conn);
+	cursor->Parameters->AddWithValue("@id", userId);
+	cursor->ExecuteNonQuery();
+}
