@@ -65,7 +65,7 @@ namespace Login {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -85,6 +85,7 @@ namespace Login {
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->datasss = (gcnew System::Windows::Forms::DataGridView());
+			this->button2 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->datasss))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -181,25 +182,12 @@ namespace Login {
 				static_cast<System::Byte>(0)));
 			this->button1->Location = System::Drawing::Point(438, 304);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(247, 47);
+			this->button1->Size = System::Drawing::Size(116, 47);
 			this->button1->TabIndex = 11;
 			this->button1->Text = L"Guardar";
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm1::button1_Click);
 			// 
-			// button2
-			//
-			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->button2->Font = (gcnew System::Drawing::Font(L"Myanmar Text", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->button2->Location = System::Drawing::Point(438, 350);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(247, 47);
-			this->button2->TabIndex = 13;
-			this->button2->Text = L"Eliminar";
-			this->button2->UseVisualStyleBackColor = true;
-			this->button2->Click += gcnew System::EventHandler(this, &MyForm1::button2_Click);
-			//
 			// datasss
 			// 
 			this->datasss->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
@@ -208,11 +196,23 @@ namespace Login {
 			this->datasss->Size = System::Drawing::Size(266, 274);
 			this->datasss->TabIndex = 12;
 			// 
+			// button2
+			// 
+			this->button2->Font = (gcnew System::Drawing::Font(L"Myanmar Text", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->button2->Location = System::Drawing::Point(560, 304);
+			this->button2->Name = L"button2";
+			this->button2->Size = System::Drawing::Size(125, 47);
+			this->button2->TabIndex = 13;
+			this->button2->Text = L"Eliminar";
+			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Click += gcnew System::EventHandler(this, &MyForm1::button2_Click);
+			// 
 			// MyForm1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(734, 358);
+			this->ClientSize = System::Drawing::Size(734, 400);
 			this->Controls->Add(this->datasss);
 			this->Controls->Add(this->Tabla);
 			this->Controls->Add(this->button1);
@@ -225,7 +225,7 @@ namespace Login {
 			this->Controls->Add(this->Nombre);
 			this->Controls->Add(this->dep);
 			this->Controls->Add(this->label3);
-			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
 			this->Name = L"MyForm1";
 			this->Text = L"MyForm1";
 			this->Load += gcnew System::EventHandler(this, &MyForm1::MyForm1_Load);
@@ -305,7 +305,7 @@ namespace Login {
 			}
 		}
 	}
-private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
 		if (datasss->SelectedRows->Count > 0)
 		{
 			// Get the ID of the selected user
@@ -337,5 +337,5 @@ private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e
 			MessageBox::Show("Please select a user to delete.", "No user selected", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		}
 	}
-};
+	};
 }
