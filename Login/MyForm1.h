@@ -50,6 +50,7 @@ namespace Login {
 	private: System::Windows::Forms::Label^ label4;
 	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::Button^ button2;
+	private: System::Windows::Forms::Button^ button3;
 	private: System::Windows::Forms::DataGridView^ datasss;
 	private:db^ data;
 
@@ -240,6 +241,24 @@ namespace Login {
 			this->button2->UseVisualStyleBackColor = false;
 			this->button2->Click += gcnew System::EventHandler(this, &MyForm1::button2_Click);
 			//
+			// button3
+			//
+			this->button3 = (gcnew System::Windows::Forms::Button());
+			this->button3->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(102)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(244)));
+			this->button3->FlatAppearance->BorderSize = 0;
+			this->button3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button3->Font = (gcnew System::Drawing::Font(L"Arial", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->button3->ForeColor = System::Drawing::Color::White;
+			this->button3->Location = System::Drawing::Point(447, 373);
+			this->button3->Name = L"button3";
+			this->button3->Size = System::Drawing::Size(247, 47);
+			this->button3->TabIndex = 14;
+			this->button3->Text = L"Modificar";
+			this->button3->UseVisualStyleBackColor = false;
+			this->button3->Click += gcnew System::EventHandler(this, &MyForm1::button3_Click);
+			//
 			// datasss
 			//
 			this->datasss->ColumnHeadersDefaultCellStyle->Font = (gcnew System::Drawing::Font(L"Arial", 10));
@@ -265,6 +284,7 @@ namespace Login {
 			this->Controls->Add(this->Tabla);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->button2);
+			this->Controls->Add(this->button3);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->Pass);
 			this->Controls->Add(this->rol);
@@ -296,20 +316,55 @@ namespace Login {
 			return;
 		}
 
-		try {
-			this->data->AbrirConeccion(); // Opens connection
-			// Using parameterized queries to prevent SQL injection.
-			String^ query = "INSERT INTO user (user, clave, rol, departamento) VALUES (@user, @clave, @rol, @departamento)";
-			MySql::Data::MySqlClient::MySqlCommand^ cmd = gcnew MySql::Data::MySqlClient::MySqlCommand(query, this->data->GetConnection());
-			cmd->Parameters->AddWithValue("@user", nombre);
-			cmd->Parameters->AddWithValue("@clave", pass);
-			cmd->Parameters->AddWithValue("@rol", userRol);
-			cmd->Parameters->AddWithValue("@departamento", departamento);
+		if (button1->Text == "Guardar")
+		{
+			try {
+				this->data->AbrirConeccion(); // Opens connection
+				// Using parameterized queries to prevent SQL injection.
+				String^ query = "INSERT INTO user (user, clave, rol, departamento) VALUES (@user, @clave, @rol, @departamento)";
+				MySql::Data::MySqlClient::MySqlCommand^ cmd = gcnew MySql::Data::MySqlClient::MySqlCommand(query, this->data->GetConnection());
+				cmd->Parameters->AddWithValue("@user", nombre);
+				cmd->Parameters->AddWithValue("@clave", pass);
+				cmd->Parameters->AddWithValue("@rol", userRol);
+				cmd->Parameters->AddWithValue("@departamento", departamento);
 
-			int result = cmd->ExecuteNonQuery();
+				int result = cmd->ExecuteNonQuery();
 
-			if (result > 0) {
-				MessageBox::Show("Usuario agregado exitosamente.", "Éxito", MessageBoxButtons::OK, MessageBoxIcon::Information);
+				if (result > 0) {
+					MessageBox::Show("Usuario agregado exitosamente.", "Éxito", MessageBoxButtons::OK, MessageBoxIcon::Information);
+					// Clear fields after successful insertion
+					Nombre->Clear();
+					Pass->Clear();
+					rol->Clear();
+					dep->Clear();
+					// Refresh DataGridView
+					Consulta();
+				}
+				else {
+					MessageBox::Show("No se pudo agregar el usuario.", "Error de base de datos", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
+			}
+			catch (MySql::Data::MySqlClient::MySqlException^ ex) {
+				MessageBox::Show("Error de base de datos: " + ex->Message, "Error de base de datos", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Ocurrió un error: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+			finally {
+				if (this->data != nullptr) {
+					this->data->CerrarConeccion(); // Closes connection after insert attempt
+				}
+			}
+		}
+		else // button1->Text == "Actualizar"
+		{
+			try {
+				this->data->AbrirConeccion(); // Opens connection
+				// Using parameterized queries to prevent SQL injection.
+				String^ userId = datasss->SelectedRows[0]->Cells[0]->Value->ToString();
+				this->data->updateUser(userId, nombre, pass, userRol, departamento);
+
+				MessageBox::Show("Usuario actualizado exitosamente.", "Éxito", MessageBoxButtons::OK, MessageBoxIcon::Information);
 				// Clear fields after successful insertion
 				Nombre->Clear();
 				Pass->Clear();
@@ -317,20 +372,19 @@ namespace Login {
 				dep->Clear();
 				// Refresh DataGridView
 				Consulta();
+				// Change the button text back to "Guardar"
+				button1->Text = "Guardar";
 			}
-			else {
-				MessageBox::Show("No se pudo agregar el usuario.", "Error de base de datos", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			catch (MySql::Data::MySqlClient::MySqlException^ ex) {
+				MessageBox::Show("Error de base de datos: " + ex->Message, "Error de base de datos", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
-		}
-		catch (MySql::Data::MySqlClient::MySqlException^ ex) {
-			MessageBox::Show("Error de base de datos: " + ex->Message, "Error de base de datos", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		}
-		catch (Exception^ ex) {
-			MessageBox::Show("Ocurrió un error: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		}
-		finally {
-			if (this->data != nullptr) {
-				this->data->CerrarConeccion(); // Closes connection after insert attempt
+			catch (Exception^ ex) {
+				MessageBox::Show("Ocurrió un error: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+			finally {
+				if (this->data != nullptr) {
+					this->data->CerrarConeccion(); // Closes connection after insert attempt
+				}
 			}
 		}
 	}
@@ -383,6 +437,29 @@ private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e
 		else
 		{
 			MessageBox::Show("Please select a user to delete.", "No user selected", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		}
+	}
+private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (datasss->SelectedRows->Count > 0)
+		{
+			// Get the data from the selected row
+			String^ nombre = datasss->SelectedRows[0]->Cells[1]->Value->ToString();
+			String^ pass = datasss->SelectedRows[0]->Cells[2]->Value->ToString();
+			String^ userRol = datasss->SelectedRows[0]->Cells[3]->Value->ToString();
+			String^ departamento = datasss->SelectedRows[0]->Cells[4]->Value->ToString();
+
+			// Populate the text boxes with the data
+			Nombre->Text = nombre;
+			Pass->Text = pass;
+			rol->Text = userRol;
+			dep->Text = departamento;
+
+			// Change the "Guardar" button's text to "Actualizar"
+			button1->Text = "Actualizar";
+		}
+		else
+		{
+			MessageBox::Show("Please select a user to modify.", "No user selected", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		}
 	}
 };
