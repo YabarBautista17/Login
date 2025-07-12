@@ -91,16 +91,23 @@ namespace Login {
 			// Tabla
 			// 
 			this->Tabla->AutoSize = true;
-			this->Tabla->Font = (gcnew System::Drawing::Font(L"Myanmar Text", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->Tabla->Font = (gcnew System::Drawing::Font(L"Arial", 20.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
+			this->Tabla->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(192)));
 			this->Tabla->Location = System::Drawing::Point(39, 13);
 			this->Tabla->Name = L"Tabla";
-			this->Tabla->Size = System::Drawing::Size(248, 34);
+			this->Tabla->Size = System::Drawing::Size(350, 34);
 			this->Tabla->TabIndex = 0;
-			this->Tabla->Text = L"Tabla de creacion de users";
+			this->Tabla->Text = L"User Management";
 			// 
 			// Pass
 			// 
+			this->Pass->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(40)), static_cast<System::Int32>(static_cast<System::Byte>(56)),
+				static_cast<System::Int32>(static_cast<System::Byte>(72)));
+			this->Pass->Font = (gcnew System::Drawing::Font(L"Arial", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->Pass->ForeColor = System::Drawing::Color::White;
 			this->Pass->Location = System::Drawing::Point(447, 105);
 			this->Pass->Multiline = true;
 			this->Pass->Name = L"Pass";
@@ -109,6 +116,11 @@ namespace Login {
 			// 
 			// Nombre
 			// 
+			this->Nombre->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(40)), static_cast<System::Int32>(static_cast<System::Byte>(56)),
+				static_cast<System::Int32>(static_cast<System::Byte>(72)));
+			this->Nombre->Font = (gcnew System::Drawing::Font(L"Arial", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->Nombre->ForeColor = System::Drawing::Color::White;
 			this->Nombre->Location = System::Drawing::Point(447, 29);
 			this->Nombre->Multiline = true;
 			this->Nombre->Name = L"Nombre";
@@ -117,6 +129,11 @@ namespace Login {
 			// 
 			// dep
 			// 
+			this->dep->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(40)), static_cast<System::Int32>(static_cast<System::Byte>(56)),
+				static_cast<System::Int32>(static_cast<System::Byte>(72)));
+			this->dep->Font = (gcnew System::Drawing::Font(L"Arial", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->dep->ForeColor = System::Drawing::Color::White;
 			this->dep->Location = System::Drawing::Point(447, 247);
 			this->dep->Multiline = true;
 			this->dep->Name = L"dep";
@@ -125,6 +142,11 @@ namespace Login {
 			// 
 			// rol
 			// 
+			this->rol->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(40)), static_cast<System::Int32>(static_cast<System::Byte>(56)),
+				static_cast<System::Int32>(static_cast<System::Byte>(72)));
+			this->rol->Font = (gcnew System::Drawing::Font(L"Arial", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->rol->ForeColor = System::Drawing::Color::White;
 			this->rol->Location = System::Drawing::Point(447, 176);
 			this->rol->Multiline = true;
 			this->rol->Name = L"rol";
@@ -134,30 +156,36 @@ namespace Login {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Myanmar Text", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->label1->Font = (gcnew System::Drawing::Font(L"Arial", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
+			this->label1->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(192)));
 			this->label1->Location = System::Drawing::Point(355, 29);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(86, 34);
 			this->label1->TabIndex = 7;
-			this->label1->Text = L"nombre";
+			this->label1->Text = L"Nombre";
 			// 
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Font = (gcnew System::Drawing::Font(L"Myanmar Text", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->label2->Font = (gcnew System::Drawing::Font(L"Arial", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
+			this->label2->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(192)));
 			this->label2->Location = System::Drawing::Point(355, 99);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(59, 34);
 			this->label2->TabIndex = 8;
-			this->label2->Text = L"clave";
+			this->label2->Text = L"Clave";
 			// 
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Font = (gcnew System::Drawing::Font(L"Myanmar Text", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->label3->Font = (gcnew System::Drawing::Font(L"Arial", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
+			this->label3->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(192)));
 			this->label3->Location = System::Drawing::Point(355, 183);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(44, 34);
@@ -167,8 +195,10 @@ namespace Login {
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Font = (gcnew System::Drawing::Font(L"Myanmar Text", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->label4->Font = (gcnew System::Drawing::Font(L"Arial", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
+			this->label4->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(192)));
 			this->label4->Location = System::Drawing::Point(297, 254);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(144, 34);
@@ -177,42 +207,60 @@ namespace Login {
 			// 
 			// button1
 			// 
-			this->button1->Font = (gcnew System::Drawing::Font(L"Myanmar Text", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->button1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(102)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(244)));
+			this->button1->FlatAppearance->BorderSize = 0;
+			this->button1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button1->Font = (gcnew System::Drawing::Font(L"Arial", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->button1->Location = System::Drawing::Point(438, 304);
+			this->button1->ForeColor = System::Drawing::Color::White;
+			this->button1->Location = System::Drawing::Point(447, 320);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(116, 47);
 			this->button1->TabIndex = 11;
 			this->button1->Text = L"Guardar";
-			this->button1->UseVisualStyleBackColor = true;
+			this->button1->UseVisualStyleBackColor = false;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm1::button1_Click);
 			// 
 			// button2
 			//
 			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->button2->Font = (gcnew System::Drawing::Font(L"Myanmar Text", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->button2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(102)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(244)));
+			this->button2->FlatAppearance->BorderSize = 0;
+			this->button2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->button2->Font = (gcnew System::Drawing::Font(L"Arial", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->button2->Location = System::Drawing::Point(560, 304);
+			this->button2->ForeColor = System::Drawing::Color::White;
+			this->button2->Location = System::Drawing::Point(569, 320);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(125, 47);
 			this->button2->TabIndex = 13;
 			this->button2->Text = L"Eliminar";
-			this->button2->UseVisualStyleBackColor = true;
+			this->button2->UseVisualStyleBackColor = false;
 			this->button2->Click += gcnew System::EventHandler(this, &MyForm1::button2_Click);
 			//
 			// datasss
 			// 
+			this->datasss->ColumnHeadersDefaultCellStyle->Font = (gcnew System::Drawing::Font(L"Arial", 10));
+			this->datasss->ColumnHeadersDefaultCellStyle->BackColor = System::Drawing::Color::FromArgb(40, 56, 72);
+			this->datasss->ColumnHeadersDefaultCellStyle->ForeColor = System::Drawing::Color::White;
+			this->datasss->DefaultCellStyle->Font = (gcnew System::Drawing::Font(L"Arial", 10));
+			this->datasss->DefaultCellStyle->BackColor = System::Drawing::Color::FromArgb(27, 40, 56);
+			this->datasss->DefaultCellStyle->ForeColor = System::Drawing::Color::White;
+			this->datasss->GridColor = System::Drawing::Color::FromArgb(40, 56, 72);
 			this->datasss->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->datasss->Location = System::Drawing::Point(25, 50);
+			this->datasss->Location = System::Drawing::Point(45, 60);
 			this->datasss->Name = L"datasss";
-			this->datasss->Size = System::Drawing::Size(266, 274);
+			this->datasss->Size = System::Drawing::Size(350, 450);
 			this->datasss->TabIndex = 12;
 			// 
 			// MyForm1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(734, 400);
+			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(27)), static_cast<System::Int32>(static_cast<System::Byte>(40)), static_cast<System::Int32>(static_cast<System::Byte>(56)));
+			this->ClientSize = System::Drawing::Size(800, 600);
 			this->Controls->Add(this->datasss);
 			this->Controls->Add(this->Tabla);
 			this->Controls->Add(this->button1);
