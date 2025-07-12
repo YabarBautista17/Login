@@ -50,3 +50,14 @@ void db::deleteUser(String^ userId) {
 	cursor->Parameters->AddWithValue("@id", userId);
 	cursor->ExecuteNonQuery();
 }
+
+void db::updateUser(String^ userId, String^ nombre, String^ clave, String^ rol, String^ departamento) {
+	String^ sql = "UPDATE user SET user = @user, clave = @clave, rol = @rol, departamento = @departamento WHERE id = @id";
+	MySqlCommand^ cursor = gcnew MySqlCommand(sql, this->conn);
+	cursor->Parameters->AddWithValue("@id", userId);
+	cursor->Parameters->AddWithValue("@user", nombre);
+	cursor->Parameters->AddWithValue("@clave", clave);
+	cursor->Parameters->AddWithValue("@rol", rol);
+	cursor->Parameters->AddWithValue("@departamento", departamento);
+	cursor->ExecuteNonQuery();
+}
