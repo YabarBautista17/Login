@@ -50,6 +50,7 @@ namespace Login {
 	private: System::Windows::Forms::Label^ label4;
 	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::Button^ button2;
+	private: System::Windows::Forms::Button^ button3;
 	private: System::Windows::Forms::DataGridView^ datasss;
 	private:db^ data;
 
@@ -208,6 +209,19 @@ namespace Login {
 			this->button2->UseVisualStyleBackColor = true;
 			this->button2->Click += gcnew System::EventHandler(this, &MyForm1::button2_Click);
 			// 
+			// button3
+			//
+			this->button3 = (gcnew System::Windows::Forms::Button());
+			this->button3->Font = (gcnew System::Drawing::Font(L"Myanmar Text", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->button3->Location = System::Drawing::Point(303, 304);
+			this->button3->Name = L"button3";
+			this->button3->Size = System::Drawing::Size(125, 47);
+			this->button3->TabIndex = 14;
+			this->button3->Text = L"Modificar";
+			this->button3->UseVisualStyleBackColor = true;
+			this->button3->Click += gcnew System::EventHandler(this, &MyForm1::button3_Click);
+			//
 			// MyForm1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -217,6 +231,7 @@ namespace Login {
 			this->Controls->Add(this->Tabla);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->button2);
+			this->Controls->Add(this->button3);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->Pass);
 			this->Controls->Add(this->rol);
@@ -250,29 +265,36 @@ namespace Login {
 
 		try {
 			this->data->AbrirConeccion(); // Opens connection
-			// Using parameterized queries to prevent SQL injection.
-			String^ query = "INSERT INTO user (user, clave, rol, departamento) VALUES (@user, @clave, @rol, @departamento)";
-			MySql::Data::MySqlClient::MySqlCommand^ cmd = gcnew MySql::Data::MySqlClient::MySqlCommand(query, this->data->GetConnection());
-			cmd->Parameters->AddWithValue("@user", nombre);
-			cmd->Parameters->AddWithValue("@clave", pass);
-			cmd->Parameters->AddWithValue("@rol", userRol);
-			cmd->Parameters->AddWithValue("@departamento", departamento);
-
-			int result = cmd->ExecuteNonQuery();
-
-			if (result > 0) {
-				MessageBox::Show("Usuario agregado exitosamente.", "Éxito", MessageBoxButtons::OK, MessageBoxIcon::Information);
-				// Clear fields after successful insertion
-				Nombre->Clear();
-				Pass->Clear();
-				rol->Clear();
-				dep->Clear();
-				// Refresh DataGridView
-				Consulta();
+			if (datasss->SelectedRows->Count > 0) {
+				String^ userId = datasss->SelectedRows[0]->Cells[0]->Value->ToString();
+				this->data->updateUser(userId, nombre, pass, userRol, departamento);
+				MessageBox::Show("Usuario actualizado exitosamente.", "Éxito", MessageBoxButtons::OK, MessageBoxIcon::Information);
 			}
 			else {
-				MessageBox::Show("No se pudo agregar el usuario.", "Error de base de datos", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				// Using parameterized queries to prevent SQL injection.
+				String^ query = "INSERT INTO user (user, clave, rol, departamento) VALUES (@user, @clave, @rol, @departamento)";
+				MySql::Data::MySqlClient::MySqlCommand^ cmd = gcnew MySql::Data::MySqlClient::MySqlCommand(query, this->data->GetConnection());
+				cmd->Parameters->AddWithValue("@user", nombre);
+				cmd->Parameters->AddWithValue("@clave", pass);
+				cmd->Parameters->AddWithValue("@rol", userRol);
+				cmd->Parameters->AddWithValue("@departamento", departamento);
+
+				int result = cmd->ExecuteNonQuery();
+
+				if (result > 0) {
+					MessageBox::Show("Usuario agregado exitosamente.", "Éxito", MessageBoxButtons::OK, MessageBoxIcon::Information);
+				}
+				else {
+					MessageBox::Show("No se pudo agregar el usuario.", "Error de base de datos", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
 			}
+			// Clear fields after successful insertion or update
+			Nombre->Clear();
+			Pass->Clear();
+			rol->Clear();
+			dep->Clear();
+			// Refresh DataGridView
+			Consulta();
 		}
 		catch (MySql::Data::MySqlClient::MySqlException^ ex) {
 			MessageBox::Show("Error de base de datos: " + ex->Message, "Error de base de datos", MessageBoxButtons::OK, MessageBoxIcon::Error);
@@ -335,6 +357,19 @@ namespace Login {
 		else
 		{
 			MessageBox::Show("Please select a user to delete.", "No user selected", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		}
+	}
+	private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (datasss->SelectedRows->Count > 0)
+		{
+			Nombre->Text = datasss->SelectedRows[0]->Cells[1]->Value->ToString();
+			Pass->Text = datasss->SelectedRows[0]->Cells[2]->Value->ToString();
+			rol->Text = datasss->SelectedRows[0]->Cells[3]->Value->ToString();
+			dep->Text = datasss->SelectedRows[0]->Cells[4]->Value->ToString();
+		}
+		else
+		{
+			MessageBox::Show("Please select a user to update.", "No user selected", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		}
 	}
 	};
