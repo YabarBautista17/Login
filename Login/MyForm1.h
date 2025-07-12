@@ -49,6 +49,7 @@ namespace Login {
 	private: System::Windows::Forms::Label^ label3;
 	private: System::Windows::Forms::Label^ label4;
 	private: System::Windows::Forms::Button^ button1;
+	private: System::Windows::Forms::Button^ button2;
 	private: System::Windows::Forms::DataGridView^ datasss;
 	private:db^ data;
 
@@ -186,6 +187,19 @@ namespace Login {
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm1::button1_Click);
 			// 
+			// button2
+			//
+			this->button2 = (gcnew System::Windows::Forms::Button());
+			this->button2->Font = (gcnew System::Drawing::Font(L"Myanmar Text", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->button2->Location = System::Drawing::Point(438, 350);
+			this->button2->Name = L"button2";
+			this->button2->Size = System::Drawing::Size(247, 47);
+			this->button2->TabIndex = 13;
+			this->button2->Text = L"Eliminar";
+			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Click += gcnew System::EventHandler(this, &MyForm1::button2_Click);
+			//
 			// datasss
 			// 
 			this->datasss->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
@@ -202,6 +216,7 @@ namespace Login {
 			this->Controls->Add(this->datasss);
 			this->Controls->Add(this->Tabla);
 			this->Controls->Add(this->button1);
+			this->Controls->Add(this->button2);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->Pass);
 			this->Controls->Add(this->rol);
@@ -288,6 +303,38 @@ namespace Login {
 			if (this->data != nullptr) {
 				this->data->CerrarConeccion(); // Closes connection after fetching data
 			}
+		}
+	}
+private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (datasss->SelectedRows->Count > 0)
+		{
+			// Get the ID of the selected user
+			String^ userId = datasss->SelectedRows[0]->Cells[0]->Value->ToString();
+
+			// Show a confirmation dialog
+			System::Windows::Forms::DialogResult result = MessageBox::Show("Are you sure you want to delete this user?", "Confirmation", MessageBoxButtons::YesNo, MessageBoxIcon::Question);
+
+			if (result == System::Windows::Forms::DialogResult::Yes)
+			{
+				try
+				{
+					this->data->AbrirConeccion();
+					this->data->deleteUser(userId);
+					Consulta();
+				}
+				catch (Exception^ ex)
+				{
+					MessageBox::Show("An error occurred while deleting the user: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
+				finally
+				{
+					this->data->CerrarConeccion();
+				}
+			}
+		}
+		else
+		{
+			MessageBox::Show("Please select a user to delete.", "No user selected", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		}
 	}
 };
